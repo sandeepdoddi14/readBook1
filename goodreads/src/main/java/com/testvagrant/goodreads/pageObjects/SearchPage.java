@@ -42,9 +42,43 @@ public class SearchPage extends TestBase {
         genericHelper.navigateTo(url);
     }
 
+    public searchParams checkType(String string) {
+        if(string.equals(searchParams.valueOf("YEAR")))
+            return  searchParams.YEAR;
+
+        if(string.equals(searchParams.valueOf("AUTHOR")))
+            return  searchParams.AUTHOR;
+
+        if(string.equals(searchParams.valueOf("PLOT")))
+            return  searchParams.PLOT;
+
+        if(string.equals(searchParams.valueOf("TRIVIA")))
+            return  searchParams.TRIVIA;
+
+        if(string.equals(searchParams.valueOf("QUOTE")))
+            return  searchParams.QUOTE;
+
+
+        return null;
+    }
+
+
+    public enum searchParams {
+        YEAR("year"),
+        PLOT("plot"),
+        AUTHOR("author"),
+        TRIVIA("trivia"),
+        QUOTE("quote");
+
+        public final String s;
+        searchParams(String s) {
+            this.s = s;
+
+        }
+
+    }
 
 }
-
 
 
 
