@@ -17,8 +17,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.darwinbox.test.automation</groupId>
-            <artifactId>dashboard</artifactId>
+            <groupId>com.sample.test.automation</groupId>
+            <artifactId>framework</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -4,9 +4,7 @@ import com.sample.framework.uiautomation.Utility.ResourceHelper;
 import com.sample.framework.uiautomation.base.TestBase;
 import com.sample.framework.uiautomation.helper.Wait.WaitHelper;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
@@ -113,6 +111,27 @@ public class    GenericHelper extends TestBase {
             throw new RuntimeException( );
         }
     }
+
+
+    public void closeTab()
+    {
+        driver.close();
+    }
+    public void openNewTab()
+    {
+        try {
+            driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL,"a"));
+            for(String window:driver.getWindowHandles()) {
+                if(driver.getTitle()=="New Tab")
+                    break;
+                driver.switchTo().window(window);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to Open New Tab");
+        }
+    }
+
 
     /**
      * This method is used to insert value in text box
