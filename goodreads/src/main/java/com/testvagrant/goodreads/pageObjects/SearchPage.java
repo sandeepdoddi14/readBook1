@@ -2,7 +2,9 @@ package com.testvagrant.goodreads.pageObjects;
 
 import com.sample.framework.uiautomation.Utility.UtilityHelper;
 import com.sample.framework.uiautomation.base.TestBase;
+import com.sample.framework.uiautomation.helper.Wait.WaitHelper;
 import com.sample.framework.uiautomation.helper.genericHelper.GenericHelper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,11 +15,11 @@ import java.util.List;
 public class SearchPage extends TestBase {
     private GenericHelper genericHelper;
     private WebDriver driver;
-    @FindBy(className = "searchBox__input searchBox--large__input")
+    @FindBy(xpath = "//*[@id='search_query_main']")
     WebElement searchBox;
-    @FindBy(className = "searchBox__button searchBox--large__button")
+    @FindBy(xpath = "/html/body/div[2]/div[3]/div[1]/div[1]/div[2]/form/div[1]/input[3]")
     WebElement submitSearchButton;
-    @FindBy(className = "/html/body/div[2]/div[3]/div[1]/div[2]/div[2]/table/tbody/tr")
+    @FindBy(xpath = "/html/body/div[2]/div[3]/div[1]/div[2]/div[2]/table/tbody/tr")
     List<WebElement> books;
 
     public SearchPage(WebDriver driver) {
@@ -26,22 +28,24 @@ public class SearchPage extends TestBase {
     }
 
     public void searchBook(String bookName) {
+
+        genericHelper.setElementText(searchBox, bookName, "Search Book");
         genericHelper.setElementText(searchBox, bookName, "Search Book");
         genericHelper.elementClick(submitSearchButton, "Search Book Button");
     }
 
     public String getFirstBookLink() {
-        return books.get(0).getText();
+        return books.get(0).findElement(By.tagName("a")).getAttribute("href");
     }
 
 
     public String getFirstBookName() {
-        return books.get(0).getAttribute("href");
+        return books.get(0).getText();
     }
 
 
     public void navigateToSearchPage() {
-        String url = new UtilityHelper().getProperty("urls.properties", "searchPage");
+        String url = new UtilityHelper().getProperty("urls", "searchPage");
         genericHelper.navigateTo(url);
     }
 

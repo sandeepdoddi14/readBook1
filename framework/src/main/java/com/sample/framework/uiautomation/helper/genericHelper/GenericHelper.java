@@ -2,6 +2,8 @@ package com.sample.framework.uiautomation.helper.genericHelper;
 
 import com.sample.framework.uiautomation.Utility.ResourceHelper;
 import com.sample.framework.uiautomation.base.TestBase;
+import com.sample.framework.uiautomation.helper.Action.ActionHelper;
+import com.sample.framework.uiautomation.helper.Javascript.JavaScriptHelper;
 import com.sample.framework.uiautomation.helper.Wait.WaitHelper;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -13,6 +15,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Random;
+import java.util.Set;
 
 
 public class    GenericHelper extends TestBase {
@@ -79,14 +82,9 @@ public class    GenericHelper extends TestBase {
             log.info("element is displayed.." + element);
             Reporter(label + " : is Displayed on page ", "Pass", log);
             return true;
-        } catch (NoSuchElementException n) {
+        } catch (Exception n) {
                 Reporter(label + " : is not Displayed on page ", "Info");
                 return false;
-        } catch (Exception e) {
-            log.info(e);
-            Reporter("Exception while loading element " + label, "Error", log);
-            throw new RuntimeException(e.getLocalizedMessage( ));
-
         }
     }
 
@@ -112,19 +110,30 @@ public class    GenericHelper extends TestBase {
         }
     }
 
+    public void switchToWindow(String windowTitle)
+    {
+        Set<String> windows=driver.getWindowHandles();
+        for(String window :windows )
+        {
+            driver.switchTo().window(window);
+            if(driver.getTitle().contains(windowTitle));
+            break;
+        }
+    }
 
     public void closeTab()
     {
         driver.close();
     }
-    public void openNewTab()
+    public void moveToNewTab()
     {
         try {
-            driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL,"a"));
+            new JavaScriptHelper(driver).openNewTab();
             for(String window:driver.getWindowHandles()) {
-                if(driver.getTitle()=="New Tab")
-                    break;
+                Thread.sleep(2000);
                 driver.switchTo().window(window);
+                if(driver.getTitle().equals("New Tab"))
+                    break;
             }
 
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.testvagrant.goodreads;
 
 import com.sample.framework.uiautomation.DataProvider.TestDataProvider;
 import com.sample.framework.uiautomation.base.TestBase;
+import com.sample.framework.uiautomation.helper.Javascript.JavaScriptHelper;
 import com.sample.framework.uiautomation.helper.genericHelper.GenericHelper;
 import com.testvagrant.goodreads.pageObjects.GoogleHelper;
 import com.testvagrant.goodreads.pageObjects.LoginPage;
@@ -20,6 +21,7 @@ public class WhatsTheBookName extends TestBase {
     SearchPage searchPage;
     GoogleHelper googleHelper;
     GenericHelper genericHelper;
+    JavaScriptHelper javaScriptHelper;
     String bookName;
 
     @BeforeClass
@@ -33,30 +35,28 @@ public class WhatsTheBookName extends TestBase {
         signInModal = PageFactory.initElements(driver, SignInModal.class);
         searchPage = PageFactory.initElements(driver, SearchPage.class);
         googleHelper = PageFactory.initElements(driver, GoogleHelper.class);
+        genericHelper = new GenericHelper(driver);
     }
 
 
     @Test(dataProvider = "TestRuns", dataProviderClass = TestDataProvider.class)
-    public void whatsTheBookName(HashMap<String, String> searchParam) throws Exception {
-        String dsata = "the therapist";
+    public void whatsTheBookName(HashMap<String, String> tweetData) throws Exception {
         loginPage.loginAsGuestOrUser();
         signInModal.closeIfModalIsPresent();
 
-        genericHelper.openNewTab();
+        genericHelper.moveToNewTab();
 
         googleHelper.goToGoogle();
-        googleHelper.searchGoogle(dsata);
-        bookName = googleHelper.getFirstRecommendation();
+        googleHelper.searchGoogle(tweetData.get("tweet"));
+        bookName = googleHelper.getFirstRecommendation().trim();
 
         genericHelper.closeTab();
+        genericHelper.switchToWindow("GoodReads");
 
         searchPage.navigateToSearchPage();
+        signInModal.closeIfModalIsPresent();
         searchPage.searchBook(bookName);
-        System.out.println(searchPage.getFirstBookName());
-        System.out.println(searchPage.getFirstBookLink());
-
-
+        System.out.println("I Guess the book Name is -->"+bookName);
+        System.out.println("You can read the book From :: "+searchPage.getFirstBookLink());
     }
-
-
 }

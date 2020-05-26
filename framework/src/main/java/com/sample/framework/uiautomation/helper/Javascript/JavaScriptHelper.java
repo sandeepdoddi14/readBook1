@@ -19,7 +19,8 @@ public class JavaScriptHelper extends TestBase{
 	GenericHelper objGenHelper;
 	private static final Logger Log = Logger.getLogger(JavaScriptHelper.class);
 
-	
+
+
 	public JavaScriptHelper(WebDriver driver) {
 		this.driver = driver;
 		Log.debug("JavaScriptHelper : " + this.driver.hashCode());
@@ -43,6 +44,12 @@ public class JavaScriptHelper extends TestBase{
 		} catch (Exception e) {
 			throw new RuntimeException("Exception while invoking java script" + e.getMessage());
 		}
+	}
+
+	public void openNewTab()
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.open('','_blank');");
 	}
 
 	/**

@@ -29,6 +29,12 @@ public class SignInModal {
     }
 
     public void closeIfModalIsPresent() {
+        try {
+            Thread.sleep(2000);
+        }catch (Exception e)
+        {
+
+        }
         if (isModalDisplayed())
             clickOnCloseButton();
     }

@@ -151,7 +151,7 @@ public class WaitHelper extends TestBase {
 	}
 
 
-	public void waitForTextToBeAvailable(WebDriver driver, WebElement element, String text) {
+	public void waitForTextToBeAvailable( WebElement element, String text) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 20);
 			wait.until(ExpectedConditions.textToBePresentInElement(element, text));

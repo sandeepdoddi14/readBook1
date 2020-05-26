@@ -14,9 +14,9 @@ public class GoogleHelper {
     private ActionHelper actionHelper;
 
 
-    @FindBy(className = "gLFyf gsfi")
+    @FindBy(xpath = "//*[@id='tsf']/div[2]/div[1]/div[1]/div/div[2]/input")
     WebElement searchBox;
-    @FindBy(xpath = "/*[@id='rso']/div[1]/div[1]/div/div[1]/div/div[2]/div/div[1]/a/div/cite/span")
+    @FindBy(xpath = "//*[@id='rso']/div[1]/div/div[1]/a/div/cite/span")
     WebElement recommendation1;
     @FindBy(xpath = "//*[@id='rso']/div[2]/div/div[1]/a/div/cite/span")
     WebElement recommendation2;
@@ -29,7 +29,7 @@ public class GoogleHelper {
 
     public void goToGoogle()
     {
-        String url= UtilityHelper.getProperty("urls.properties","google");
+        String url= UtilityHelper.getProperty("urls","google");
         driver.get(url);
     }
 
@@ -42,7 +42,7 @@ public class GoogleHelper {
 
 
     public String getFirstRecommendation() {
-        return genericHelper.getTextFromElement(recommendation1,"First Google Recommendation");
+        return genericHelper.getTextFromElement(recommendation1,"First Google Recommendation").replace("›","");
 
     }
 
